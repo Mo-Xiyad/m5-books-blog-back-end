@@ -45,7 +45,7 @@ blogPostsRouter.get("/", (req, res, next) => {
 blogPostsRouter.get("/:postId", (req, res, next) => {
   try {
     const posts = getPosts();
-    const post = posts.find((p) => p.id === req.params.postId);
+    const post = posts.find((p) => p._id === req.params.postId);
 
     if (post) {
       res.status(200).send(post);
@@ -74,7 +74,7 @@ blogPostsRouter.post("/", blogPostsValidationMiddlewares, (req, res, next) => {
 
       writePosts(posts);
 
-      res.status(200).send({ id: newPost.id });
+      res.status(200).send({ _id: newPost._id });
     }
   } catch (error) {
     next(error);
@@ -86,7 +86,7 @@ blogPostsRouter.put("/:postId", (req, res, next) => {
   try {
     const posts = getPosts();
 
-    const index = posts.findIndex((p) => p.id === req.params.postId);
+    const index = posts.findIndex((p) => p._id === req.params.postId);
 
     const postToEdit = posts[index];
 
@@ -111,7 +111,7 @@ blogPostsRouter.delete("/:postId", (req, res, next) => {
   try {
     const posts = getPosts();
 
-    const remainingPosts = posts.filter((p) => p.id !== req.params.postId);
+    const remainingPosts = posts.filter((p) => p._id !== req.params.postId);
 
     writePosts(remainingPosts);
 
